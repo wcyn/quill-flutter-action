@@ -1,0 +1,39 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test-action:
+    name: GitHub Actions Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Flutter Project
+        id: checkout-flutter-project
+        uses: actions/checkout@v4
+        with:
+          repository: wcyn/findseat
+          path: ./
+      - name: Checkout Action
+        id: checkout-action
+        uses: actions/checkout@v4
+        with:
+          path: ./
+      - run: |
+          ls -la .
+          echo "\n------------\n"
+      - name: Test Local Action
+        id: test-action
+        uses: ./
+        with:
+          gdrive-sa-key: ${{ secrets.GDRIVE_SA_KEY }}
+
+      - name: Print Output
+        id: output
+        run: echo "${{ steps.test-action.outputs.emulator-link }}"

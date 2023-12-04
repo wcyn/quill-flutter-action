@@ -13,7 +13,7 @@ See also [quill-android-gradle-action](https://github.com/quilldevtools/quill-an
 # Usage
 
 To use the action, create a workflow file `quill.yml` in your repo's `.github/workflows` directory.
-Here's a basic set up that builds the android apk and uploads it to Google Drive.
+Here's a basic set up that builds the Android apk and uploads it to Google Drive.
 
 ```yaml
 # .github/workflows/quill.yml
@@ -21,11 +21,11 @@ Here's a basic set up that builds the android apk and uploads it to Google Drive
 # This name will appear under your 'Actions' tab on GitHub
 name: Build and view android app on Quill
 
-# Controls when the workflow will run. It is recommended to run it when a pull request is
-# opened and when the pull request code is updated (synchronized)
+# Controls when the workflow will run. It is recommended to run it when a pull request event occurs. By default, this
+# will run when the Pull Request, is opened, reopened and synchronized (when the PR code is updated)
 on:
   pull_request:
-    types: [opened, synchronize]
+
 permissions:
   pull-requests: write # Needed to add comments to the Pull Request that triggered the build
   actions: write # Needed to cancel a workflow when it no longer needs to run
@@ -97,14 +97,20 @@ These actions [can only execute on runners with a Linux operating system](https:
 
 ### Events
 
-- Any event can be used to trigger the action but we recommend using the `pull_request` event` as such:
+Any event can be used to trigger the action but we recommend using the `pull_request` event` as shown below.
 
 ```yaml
-# Runs when a pull request is opened and when the pull request code is updated (synchronized)
+# Runs when a pull request is opened, reopened, and when the pull request code is updated (synchronized)
 on:
   pull_request:
-    types: [opened, synchronize]
+    # optionally specify the branches the PR is targeted for which the workflow should run
+    branches:
+      - main
 ```
+
+See
+[Events that Trigger Workflows documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request)
+for more info
 
 ## Dependencies
 
@@ -117,4 +123,4 @@ on:
 
 # License
 
-The scripts and documentation in this project are released under the [MIT License](LICENSE).
+The scripts and documentation in this project are released under the [MIT License](./LICENSE).
